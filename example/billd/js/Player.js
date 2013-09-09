@@ -11,7 +11,7 @@
 	var idleActions = ["play1", "play2", "play3", "stand1", "attack", "stand3"];
 	var IDLE_TIME = 300;
 
-	var SHOOT_TIME = 40;
+	var SHOOT_TIME = 20;
 
 	var Player = ns.Player = function()
 	{
@@ -46,7 +46,7 @@
 		this.addAnimation("play3", "88-93", true, 6);
 		this.addAnimation("jump2", "60-70", false, 8);
 		this.addAnimation("jump1", "71-77", false, 6);
-		this.addAnimation("attack", "80-87", true, 6);
+		this.addAnimation("attack", "80-87", true, 15);
 		this.addAnimation("climb", "88-89", true, 6);
 
 		this.setImg(R.images["billd_mc"], 22, 22);
@@ -102,9 +102,9 @@
 			this.playAction("jump2");
 			this.idleTime = 0;
 		}
-		else if(this.shootTime < 36) {
+		else if(this.shootTime < 14) {
 			this.playAction("attack");
-			if(this.shootTime == 30){
+			if(this.shootTime == 12){
 				var v = new Vector(5, 0);
 				var shootAngle = 0.7;
 				var angle = this.scaleX==1?this.angle-shootAngle:this.angle+Math.PI+shootAngle;

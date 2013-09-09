@@ -1,8 +1,11 @@
 (function(win){
 	var ns = FL.ns("billd");
+	
 	eval(FL.import("FL", "Utils, MovieClip"));
+	eval(FL.import("ns", "Move"));
 	
 	var speed = 1.5;
+	
 	var Spider = ns.Spider = function(){
 		MovieClip.apply(this, arguments);
 		this.alive = true;
@@ -10,6 +13,7 @@
 		this.v = new Vector(speed, 0);
 		this.a = new Vector(0, .2);
 		this.onGround = false;
+
 	};
 	Utils.extends(Spider, MovieClip);
 
@@ -21,7 +25,12 @@
 		this.setImg(R.images["spider"], 41, 24);
 		this.originX = this.width>>1;
 		this.originY = this.height - 5;
-	};
+
+		this.move = new Move(this);
+		this.move.addEventListener(Move.HIT_BOTTOM, onHit);
+		this.move.addEventListener(Move.HIT_LEFT, onHit);
+		this.move.addEventListener(Move.HIT_RIGHT, onHit);
+	}
 
 	Spider.prototype.doSth = function()
 	{
@@ -35,25 +44,8 @@
 
 	Spider.prototype.checkMap = function(map)
 	{
-		if(map && this.v.y > 0)
-		{
-			var dataArr = map.mapData[(this.x - map.x)>>0];
-			if(dataArr){
-				for(var i = 0, l = dataArr.length;i < l;i ++)
-				{
-					var data = dataArr[i];
-					if(data.y <= this.pos.y + 2 && data.y >= this.pos.y - 5)
-					{
-						this.pos.y = data.y;
-						this.v.y = 0;
-						this.angle = data.ang;
-						this.a.x = Math.sin(this.angle) * (Math.cos(this.angle)>0?1:-1) * .07;
-						this.onGround = true;
-						break;
-					}
-				}
-			}
-		}
+		this.move.checkMap(this.getHitRect(), this.v, map);
+		
 		if(map && this.v.y > 0 && this.onGround)
 		{
 			this.onGround = false;
@@ -62,6 +54,15 @@
 			this.v.y = 0;
 		}
 	};
+
+	Spider.prototype.getHitRect = function(){
+		return {
+			x:this.pos.x - this.originX,
+			y:this.pos.y,
+			width:this.width,
+			height:this.height
+		};
+	}
 
 	Spider.prototype.attack = function(){
 		this.scaleX = this.scaleY = 1.4;
@@ -109,5 +110,18 @@
 		ball.update();
 		return ball;
 	}
+
+	function onHit(data){
+		var type = data.type;
+		var data = data.data;
+		var that = this.parent;
+		if(type == Move.HIT_BOTTOM){
+			that.pos.y = data.y;
+			that.v.y = 0;
+			that.angle = data.angle;
+			//that.a.x = Math.sin(that.angle) * (Math.cos(that.angle)>0?1:-1) * .07;
+			that.onGround = true;
+		}
+	};
 
 })(window);
