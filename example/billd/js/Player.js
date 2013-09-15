@@ -93,7 +93,7 @@
 
 		if(this.v.y == 0 && Keyboard.getIsDown("SPACE") && this.shootTime >= SHOOT_TIME)
 		{
-			this.playAction("attack");
+			this.playAction("play2");
 			this.idleTime = 0;
 			this.shootTime = 0;
 		}
@@ -103,7 +103,7 @@
 			this.idleTime = 0;
 		}
 		else if(this.shootTime < 14) {
-			this.playAction("attack");
+			this.playAction("play2");
 			if(this.shootTime == 12){
 				var v = new Vector(5, 0);
 				var shootAngle = 0.7;

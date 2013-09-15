@@ -23,7 +23,7 @@
 		this.time = 0;
 
 		this.setImg(R.images["spider"], 41, 24);
-		this.originX = this.width>>1;
+		this.originX = this.width * .5;
 		this.originY = this.height - 5;
 
 		this.move = new Move(this);
@@ -58,7 +58,7 @@
 	Spider.prototype.getHitRect = function(){
 		return {
 			x:this.pos.x - this.originX,
-			y:this.pos.y,
+			y:this.pos.y - this.originY,
 			width:this.width,
 			height:this.height
 		};
@@ -116,10 +116,11 @@
 		var data = data.data;
 		var that = this.parent;
 		if(type == Move.HIT_BOTTOM){
+
 			that.pos.y = data.y;
 			that.v.y = 0;
 			that.angle = data.angle;
-			//that.a.x = Math.sin(that.angle) * (Math.cos(that.angle)>0?1:-1) * .07;
+			that.a.x = Math.sin(that.angle) * (Math.cos(that.angle)>0?1:-1) * .07;
 			that.onGround = true;
 		}
 	};

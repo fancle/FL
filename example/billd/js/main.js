@@ -101,6 +101,7 @@
 			var arr = mapData.mc[type]||[];
 			for(var i = 0,l = arr.length;i < l;i ++)
 			{
+				if(type == "spider" && i != 18) continue;
 				var mc = InstanceFactory.create(type, arr[i]);
 				mc && stage.addChild(mc);
 			}

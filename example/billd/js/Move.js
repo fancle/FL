@@ -18,17 +18,18 @@
 	Move.prototype.checkMap = function(rect, v, map){
 		if(!map) return;
 
-		var x = rect.x>>0;
-		var y = rect.y>>0;
-		var width = rect.width>>0;
-		var height = rect.height>>0;
+		var centerX = rect.x + rect.width*.5;
+		var x = rect.x;
+		var y = rect.y;
+		var width = rect.width;
+		var height = rect.height;
 		var right = x + width;
-		var bottom = y +height;
+		var bottom = y + height;
 
 		//脚碰地
 		if(v.y >= 0)
 		{
-			var dataArr = map.mapData[x];
+			var dataArr = map.mapData[centerX>>0];
 			if(dataArr){
 				for(var i = 0, l = dataArr.length;i < l;i ++)
 				{
@@ -45,65 +46,65 @@
 		}
 
 		//头碰墙
-		var dataArr = map.wallData[top - PADDING];
-		if(v.x > 0)//碰右边墙
-		{
-			if(dataArr){
-				for(var i = 0, l = dataArr.length;i < l;i ++)
-				{
-					var x = dataArr[i];
-					if(x <= right && x >= right - PADDING)
-					{
-						this.dispatchEvent({type:HIT_RIGHT, data:dataArr[i]});
-						return;
-					}
-				}
-			}
-		}
-		else if(v.x < 0)//碰左边墙
-		{
-			if(dataArr){
-				for(var i = 0, l = dataArr.length;i < l;i ++)
-				{
-					var x = dataArr[i];
-					if(x <= x + PADDING && x >= x)
-					{
-						this.dispatchEvent({type:HIT_LEFT, data:dataArr[i]});
-						return;
-					}
-				}
-			}
-		}
-		//脚碰墙
-		var dataArr = map.wallData[bottom + PADDING];
-		if(v.x > 0)//碰右边墙
-		{
-			if(dataArr){
-				for(var i = 0, l = dataArr.length;i < l;i ++)
-				{
-					var x = dataArr[i];
-					if(x <= right && x >= right - PADDING)
-					{
-						this.dispatchEvent({type:HIT_RIGHT, data:dataArr[i]});
-						return;
-					}
-				}
-			}
-		}
-		else if(v.x < 0)//碰左边墙
-		{
-			if(dataArr){
-				for(var i = 0, l = dataArr.length;i < l;i ++)
-				{
-					var x = dataArr[i];
-					if(x <= x + PADDING && x >= x)
-					{
-						this.dispatchEvent({type:HIT_LEFT, data:dataArr[i]});
-						return;
-					}
-				}
-			}
-		}
+		// var dataArr = map.wallData[top - PADDING];
+		// if(v.x > 0)//碰右边墙
+		// {
+		// 	if(dataArr){
+		// 		for(var i = 0, l = dataArr.length;i < l;i ++)
+		// 		{
+		// 			var x = dataArr[i];
+		// 			if(x <= right && x >= right - PADDING)
+		// 			{
+		// 				this.dispatchEvent({type:HIT_RIGHT, data:dataArr[i]});
+		// 				return;
+		// 			}
+		// 		}
+		// 	}
+		// }
+		// else if(v.x < 0)//碰左边墙
+		// {
+		// 	if(dataArr){
+		// 		for(var i = 0, l = dataArr.length;i < l;i ++)
+		// 		{
+		// 			var x = dataArr[i];
+		// 			if(x <= x + PADDING && x >= x)
+		// 			{
+		// 				this.dispatchEvent({type:HIT_LEFT, data:dataArr[i]});
+		// 				return;
+		// 			}
+		// 		}
+		// 	}
+		// }
+		// //脚碰墙
+		// var dataArr = map.wallData[bottom + PADDING];
+		// if(v.x > 0)//碰右边墙
+		// {
+		// 	if(dataArr){
+		// 		for(var i = 0, l = dataArr.length;i < l;i ++)
+		// 		{
+		// 			var x = dataArr[i];
+		// 			if(x <= right && x >= right - PADDING)
+		// 			{
+		// 				this.dispatchEvent({type:HIT_RIGHT, data:dataArr[i]});
+		// 				return;
+		// 			}
+		// 		}
+		// 	}
+		// }
+		// else if(v.x < 0)//碰左边墙
+		// {
+		// 	if(dataArr){
+		// 		for(var i = 0, l = dataArr.length;i < l;i ++)
+		// 		{
+		// 			var x = dataArr[i];
+		// 			if(x <= x + PADDING && x >= x)
+		// 			{
+		// 				this.dispatchEvent({type:HIT_LEFT, data:dataArr[i]});
+		// 				return;
+		// 			}
+		// 		}
+		// 	}
+		// }
 	};
 
 })(this);
